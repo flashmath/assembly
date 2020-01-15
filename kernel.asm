@@ -5,7 +5,7 @@ GLOBAL _start
 
 _start:
 
-    mov eax,10
+    mov eax,65
     push eax
     call foo
     mov [0xB8B40], eax

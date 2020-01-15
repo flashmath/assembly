@@ -1,0 +1,5 @@
+#!/bin/bash
+gcc -m32 -c test.c -o test.o
+nasm -f elf32 -o kernel.o kernel.asm
+ld -m elf_i386 -Ttext 1000 kernel.o test.o -o kernel
+cat bootsect kernel /dev/zero | dd of=floppyA bs=512 count=2880
