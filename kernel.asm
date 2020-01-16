@@ -1,15 +1,16 @@
 [BITS 32]
 
-EXTERN foo
+EXTERN scrollup, print
 GLOBAL _start
 
 _start:
 
-    mov eax,65
-    push eax
-    call foo
-    mov [0xB8B40], eax
-    mov byte [0xB8B41], 0x57
+    push dword msg
+    call print
+    mov [0xB8B40],eax
+    mov byte [0xB8B41],0x57  
+    pop  eax
+
 
 end:
     jmp end
