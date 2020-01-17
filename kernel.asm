@@ -3,17 +3,28 @@
 EXTERN scrollup, print
 GLOBAL _start
 
+	section .text
 _start:
-
-    push dword msg
+	
+    mov eax, msg
+    push eax
     call print
-    mov [0xB8B40],eax
-    mov byte [0xB8B41],0x57  
     pop  eax
+
+    mov eax, msg2
+    push eax
+    call print
+    pop  eax
+
+    mov eax,2
+    push eax
+    call scrollup
 
 
 end:
     jmp end
 
-msg  db 'un premier message', 10, 0
-msg2 db 'un deuxième message', 10, 0
+	section .data
+
+msg:  db 'un premier message', 10, 0
+msg2: db 'un autre message', 10, 0
