@@ -1,0 +1,6 @@
+#!/bin/bash
+gcc -m32 -L/usr/lib32 -fno-pie -no-pie -c screen.c
+gcc -m32 -L/usr/lib32 -fno-pie -no-pie -c kernel.c
+ld --oformat binary -m elf_i386 -Ttext 1000 kernel.o screen.o -o kernel
+cat bootsect kernel /dev/zero | dd of=floppyA bs=512 count=2880
+qemu-system-i386 -boot a -fda floppyA
