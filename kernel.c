@@ -3,7 +3,7 @@ typedef int bool;
 #define true 1
 
 extern void scrollup(unsigned int);
-extern void print(char *);
+extern unsigned char print(char *);
 
 extern kY;
 extern kattr;
@@ -14,16 +14,15 @@ int pow(int a, unsigned char n);
 
 void _start(void)
 {
-	/*kY=18;
+	
+	kY=18;
 	kattr=0x5E;
 	print("un message \n");
 	
 	kattr=0x4E;
-	print("un autre message\n");
+	print("un autre message \n");
 	
-	scrollup(2);*/
-	
-	printresult(107);
+	scrollup(2);
 	
 	while(1);
 }
