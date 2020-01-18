@@ -1,13 +1,7 @@
 #include "types.h"
 
-#define RAMSCREEN 0xB8000       /* début de la mémoire vidéo */
-#define SIZESCREEN 0xFA0        /* 4000, nombres d'octets d'une page texte */
-#define SCREENLIM 0xB8FA0
-
-
-unsigned int kX = 1;                   /* position courante du curseur à l'écran */
-unsigned int kY = 18; 
-unsigned char kattr = 0x0E;              /* attributs vidéo des caractères à afficher */
+#define __SCREEN__
+#include "screen.h"
 
 
 /* 

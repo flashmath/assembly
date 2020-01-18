@@ -1,71 +1,31 @@
-typedef int bool;
-#define false 0
-#define true 1
-
-extern void scrollup(unsigned int);
-extern unsigned char print(char *);
-
-extern kY;
-extern kattr;
+#include "debug.h"
+#include "types.h"
+#include "gdt.h"
+#include "screen.h"
 	
-void screen(unsigned char n, unsigned char posx, unsigned char posy);
-void printresult(int n);
-int pow(int a, unsigned char n);
+int main(void);
 
 void _start(void)
 {
 	
-	kY=18;
+	kY=10;
 	kattr=0x5E;
-	print("un message \n");
+	print("kernel : loading new gdt...\n");
 	
-	kattr=0x4E;
-	print("un autre message \n");
+	init_gdt();
+	
+	asm("	movw $0x18, %ax \n \
+	movw %ax, %ss \n \
+	movl $0x20000, %esp");
+	
+	main();
+}
+
+int main(void)
+{
+	kattr= 0x4E;
+	print("kernel : nouvelle gdt chargee\n");
 	
 	scrollup(2);
-	
 	while(1);
-}
-
-void screen(unsigned char n, unsigned char posx, unsigned char posy)
-{
-	unsigned char *video;
-	
-	video =(unsigned char *)(0xB8000  + 2 * posx + 160 * posy);
-	*video = 48 + n;
-
-	*(video + 1) = 0x57;
-}
-
-void printresult(int n){
-	int i;
-	int q;
-	unsigned char x=0;
-	bool init = false;
-	int dec;
-	for (i = 2; i>= 0 ; i--){
-		dec = pow(10,i);
-		q = n / dec;
-		if (q!=0) {
-			init = true;
-		}
-		if (init || i==0) {
-			screen(q,x,17);
-			x++;
-		}
-		n = n % dec;
-	}
-}
-
-int pow(int a, unsigned char n){
-	if (n==0){
-		return 1;
-	} else {
-		int val = 1;
-		int i;
-		for (i=1;i<=n;i++){
-			val = val * a;
-		}
-		return val;
-	}
 }
