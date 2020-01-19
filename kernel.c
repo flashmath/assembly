@@ -1,13 +1,11 @@
-extern void scrollup(unsigned int);
-extern unsigned char print(char *);
-
-extern kY;
-extern kattr;
-
 #include "debug.h"
 #include "types.h"
 #include "gdt.h"
 #include "screen.h"
+#include "io.h"
+#include "idt.h"
+
+void init_pic(void);
 	
 int main(void);
 
@@ -16,7 +14,15 @@ void _start(void)
 	
 	kY=10;
 	kattr=0x5E;
-	print("kernel : loading new gdt...\n");
+	
+	print("kernel : initialisation du noyau\n");
+	
+	init_idt();
+	print("kernel : idt chargee\n");
+	
+	init_pic();
+	print("kernel : pic configure\n");
+	
 	
 	init_gdt();
 	
@@ -29,10 +35,17 @@ void _start(void)
 
 int main(void)
 {
-	kattr= 0x4E;
+
 	print("kernel : nouvelle gdt chargee\n");
 	
 	scrollup(2);
-
+	
+	sti;
+	
+	kattr= 0x4E;
+	print("kernel : interruption permise\n");
+	
+	kattr = 0x07;
+	
 	while(1);
 }
