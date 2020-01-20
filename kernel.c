@@ -38,14 +38,18 @@ int main(void)
 
 	print("kernel : nouvelle gdt chargee\n");
 	
-	scrollup(2);
-	
 	sti;
 	
 	kattr= 0x4E;
 	print("kernel : interruption permise\n");
 	
 	kattr = 0x07;
+	
+	scrollup(5);
+	
+	print(">>");
+	
+	show_cursor();
 	
 	while(1);
 }
